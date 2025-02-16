@@ -17,7 +17,7 @@ declare class Database {
     protocol: string;
     authenticateUser(userId: string, password: string): number;
     login(userId: string, password: string): boolean;
-    loginByAuthToken(idToken: string): void;
+    loginByAuthToken(authToken: string): void;
     loginBySession(session: Session): boolean;
     logout(): void;
     query(sql: string | string[], options?: any): DataSet | DataSet[];
@@ -25,7 +25,7 @@ declare class Database {
     executeDDL(statement: string): void;
     createKey(keysQty: number, useHighKeys?: boolean): number;
     incVersion(): number;
-    applyUpdates(dataSets: DataSet | any[], log?: boolean): number;
+    applyUpdates(dataSets: DataSet | any[], logChanges?: boolean): number;
     getReferences(
         key: number,
         tableName: string,
@@ -52,29 +52,41 @@ declare class Database {
             content?: string;
             key?: number | DBKey;
             classKey?: number | DBKey;
-            version?: boolean;
+            version?: number | DBKey;
+            async?: boolean;
+            tag?: string;
         }
     ): void;
+    updateLogs(
+        filters: {
+            version?: number;
+            tag?: string;
+        },
+        values: {
+            freshTrack: boolean;
+        }
+    ): void;
+    sendPendingLogs(wait?: boolean, timeout?: number): boolean;
     discardEndpointInfoCache(): void;
     discardCaches(): void;
-    sendMail(mail: Mail): void;
+    sendEmail(email: Email): void;
     userHasScope(userKey: DBKey | number, scope: string | DBKey | number): boolean;
 }
 declare namespace Database {
-    export { fromConfig, Mail, Session, VersionInfo, DatabaseVersionInfo };
+    export { fromConfig, Email, Session, VersionInfo, DatabaseVersionInfo };
 }
 import Connection = require('../connection/Connection.js');
-interface DatabaseVersionInfo {
-    server: VersionInfo;
-    client: VersionInfo;
-}
-type Session = import('../session/Session');
 import DataSet = require('../dataset/DataSet.js');
 import DBKey = require('../dbkey/DBKey.js');
-type Mail = import('../mail/Mail');
 declare function fromConfig(key: DBKey | number): Database;
+type Email = import('../email/Email');
+type Session = import('../session/Session');
 interface VersionInfo {
     major: number;
     minor: number;
     name: string;
+}
+interface DatabaseVersionInfo {
+    server: VersionInfo;
+    client: VersionInfo;
 }

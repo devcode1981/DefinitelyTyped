@@ -28,14 +28,11 @@ declare class PermissionManager {
     remove(key: number): number;
     removeOrphans(): number;
     fixClasses(): void;
-    fixInheritance(
-        opt_options?:
-            | Record<any, any>
-            | {
-                  resources: number[];
-                  transaction: Transaction;
-              }
-    ): number | null;
+    fixInheritance(options?: {
+        transaction?: Transaction;
+        resources?: number[];
+        ignoredKeys?: number[];
+    }): number | null;
     copyPermissions(
         source: number,
         target: number,
@@ -52,5 +49,5 @@ declare namespace PermissionManager {
 }
 import DataSet = require('../dataset/DataSet.js');
 import PermissionAssignment = require('./PermissionAssignment.js');
-type Transaction = import('../dataset/Transaction');
 declare function getInstance(): PermissionManager;
+type Transaction = import('../dataset/Transaction');

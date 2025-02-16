@@ -32,27 +32,27 @@ declare class ClassDefManager {
     getModelDef(
         classKey: number,
         opt_options?:
-            | Record<any, any>
             | {
                   ignoredFileKeys: number[];
                   forceStrictMode: boolean;
               }
+            | Record<any, any>
     ): ModelDef;
     getViewDef(
         classKey: number,
         opt_options?:
-            | Record<any, any>
             | {
                   ignoredFileKeys: number[];
               }
+            | Record<any, any>
     ): ModelDef;
     getConfig(
         classKey: number,
         opt_options?:
-            | Record<any, any>
             | {
                   ignoredFileKeys: number[];
               }
+            | Record<any, any>
     ): ConfigDef;
     getClassDef(classKey: number, opt_ignoredClassKeys?: number[]): ModelDef;
     getModelDefBySource(src: string, parent: number, opt_classKey?: number): ModelDef;
@@ -86,10 +86,10 @@ type DataSet = import('../dataset/DataSet');
 declare const classes: import('../database/Classes.js');
 import ModelDef = require('./ModelDef.js');
 import ConfigDef = require('./ConfigDef.js');
-declare var protectedFieldProperties: string[];
-declare var protectedFieldEvents: string[];
-declare var protectedModelDefProperties: string[];
-declare var protectedModelDefEvents: string[];
+declare let protectedFieldProperties: string[];
+declare let protectedFieldEvents: string[];
+declare let protectedModelDefProperties: string[];
+declare let protectedModelDefEvents: string[];
 declare namespace constructors {
     export { ModelDef as VIEW };
     export { ModelDef as MODEL };

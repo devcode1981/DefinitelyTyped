@@ -1,8 +1,8 @@
 export = File;
-declare function File(fileName: string, opt_mode?: string, opt_encoding?: string): void;
+declare function File(fileName: string, mode?: string, encoding?: string): void;
 declare class File {
-    constructor(fileName: string, opt_mode?: string, opt_encoding?: string);
-    write(data: string | ArrayBuffer): void;
+    constructor(fileName: string, mode?: string, encoding?: string);
+    write(data: string | Uint8Array | ArrayBuffer): void;
     writeln(data: string): void;
     read(opt_count?: number): string;
     readln(): string;
@@ -10,6 +10,7 @@ declare class File {
     flush(): void;
     close(): void;
     position: number;
+    eof: boolean;
     size: number;
     modified: Date;
 }
@@ -27,6 +28,7 @@ declare namespace File {
         copyFile,
         getTempFileName,
         createTempFile,
+        createTempDirName,
         fileFromString,
         stringFromFile,
         pathAppend,
@@ -35,7 +37,6 @@ declare namespace File {
         extractFileName,
         extractFilePath,
         getSize,
-        createTempDirName,
         listEntries,
         copyDirectory,
         openForRead,
@@ -55,15 +56,15 @@ declare function moveFile(existingFileName: string, newFileName: string): boolea
 declare function copyFile(existingFileName: string, newFileName: string): boolean;
 declare function getTempFileName(): string;
 declare function createTempFile(): File;
+declare function createTempDirName(): string;
 declare function fileFromString(fileName: string, content: string, opt_encoding?: string): void;
 declare function stringFromFile(fileName: string, opt_encoding?: string): string;
 declare function pathAppend(path: string, append: Array<string[] | string>): string;
-declare var pathSeparator: string;
+declare let pathSeparator: string;
 declare function changeFileExtension(fileName: string, extension: string): string;
 declare function extractFileName(fileName: string): string;
 declare function extractFilePath(fileName: string): string;
 declare function getSize(fileName: string): number;
-declare function createTempDirName(): string;
 declare function listEntries(
     path: string,
     opt_options?: {
